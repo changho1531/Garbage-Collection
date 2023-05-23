@@ -73,6 +73,9 @@ class MyClass
     }
 }
 ```
+위의 코드에서 MyClass는 다른 MyClass 객체를 참조하는 Reference 속성을 가지고 있습니다. 코드 실행 후 obj1과 obj2가 참조 해제되었을 때, GC에 의해 수집되는지 확인합니다. GC.Collect() 메서드를 호출하여 가비지 수집을 요청하고, GC.WaitForPendingFinalizers() 메서드를 호출하여 GC의 실행을 대기합니다. 이후 참조가 남아있는지 여부를 확인하여 GC 동작을 검증합니다.
+
+실행 결과, obj2.Reference가 null이 아니라면 GC가 동작하지 않은 것을 의미하며, obj2가 null이라면 GC에 의해 수집된 것을 의미합니다.
 
 ### 가비지 컬렉션의 사용 방법
 
