@@ -3,7 +3,7 @@
 
 ## 가비지 컬렉션 (Garbage Collection)
 - 프로그램에서 사용하지 않는 동적으로 할당된 메모리를 자동으로 해제하는 메모리 관리 기법입니다.
-- 
+
 - GC는 프로그래머가 명시적으로 메모리를 할당하거나 해제하는 번거로움과 실수를 줄이고, 메모리 누수와 같은 일반적인 메모리 관련 문제를 방지합니다.
 
 ### 가비지 컬렉션의 필요성
@@ -22,60 +22,6 @@
 
 - 정리 및 압축: GC는 메모리를 조각화되지 않은 상태로 유지하기 위해 사용 중인 메모리 영역을 정리하고, 객체들을 연속적인 메모리 영역으로 이동시킵니다.
 
-### 가비지 컬렉션의 동작 매커니즘 예제
-```C#
-using System;
-
-class Program
-{
-    static void Main()
-    {
-        // 객체 생성
-        MyClass obj1 = new MyClass();
-        MyClass obj2 = new MyClass();
-        
-        // obj2가 obj1을 참조
-        obj2.Reference = obj1;
-        
-        // obj1을 null로 설정하여 참조 해제
-        obj1 = null;
-        
-        // GC 실행을 알리기 위해 가비지 수집 요청
-        GC.Collect();
-        
-        // GC가 실행되기 위해 잠시 대기
-        GC.WaitForPendingFinalizers();
-        
-        // obj2가 GC에 의해 수집되지 않았는지 확인
-        Console.WriteLine(obj2.Reference != null);  // true
-        
-        // obj2도 null로 설정하여 참조 해제
-        obj2 = null;
-        
-        // GC 실행을 알리기 위해 다시 가비지 수집 요청
-        GC.Collect();
-        
-        // GC가 실행되기 위해 잠시 대기
-        GC.WaitForPendingFinalizers();
-        
-        // obj2도 GC에 의해 수집되었는지 확인
-        Console.WriteLine(obj2 == null);  // true
-    }
-}
-
-class MyClass
-{
-    public MyClass Reference { get; set; }
-    
-    ~MyClass()
-    {
-        Console.WriteLine("Finalizer가 호출되었습니다.");
-    }
-}
-```
-위의 코드에서 MyClass는 다른 MyClass 객체를 참조하는 Reference 속성을 가지고 있습니다. 코드 실행 후 obj1과 obj2가 참조 해제되었을 때, GC에 의해 수집되는지 확인합니다. GC.Collect() 메서드를 호출하여 가비지 수집을 요청하고, GC.WaitForPendingFinalizers() 메서드를 호출하여 GC의 실행을 대기합니다. 이후 참조가 남아있는지 여부를 확인하여 GC 동작을 검증합니다.
-
-실행 결과, obj2.Reference가 null이 아니라면 GC가 동작하지 않은 것을 의미하며, obj2가 null이라면 GC에 의해 수집된 것을 의미합니다.
 
 ### 가비지 컬렉션의 사용 방법
 
